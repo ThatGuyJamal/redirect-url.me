@@ -49,14 +49,10 @@ const RedirectsTable: FC<RedirectsTableProps> = ({
 	const handleConfirmDelete = (id: Id<"redirects">) => {
 		console.log("Deleting redirect with ID:", confirmDelete);
 
-		toast.promise(destroy({
+		destroy({
 			id,
 			user_email: user_email ? user_email : "skip",
-		}), {
-			loading: "Deleting your data...",
-			success: "Deleted!",
-			error: "Failed to delete...",
-		})
+		}).then(() => toast.success("Deleted!"));
 
 		setConfirmDelete(null); // Clear the confirmation state
 	};

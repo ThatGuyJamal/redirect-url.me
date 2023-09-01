@@ -1,5 +1,4 @@
 import "../styles/globals.css";
-
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import { ErrorBoundary } from "react-error-boundary";
@@ -30,23 +29,23 @@ export default function RootLayout({
 	const isAuthenticated = userId !== null;
 
 	return (
-		<ClerkProvider
-			appearance={{
-				variables: { colorPrimary: "#000000" },
-				elements: {
-					formButtonPrimary:
-						"bg-black border border-black border-solid hover:bg-white hover:text-black",
-					socialButtonsBlockButton:
-						"bg-white border-gray-200 hover:bg-transparent hover:border-black text-gray-600 hover:text-black",
-					socialButtonsBlockButtonText: "font-semibold",
-					formButtonReset:
-						"bg-white border border-solid border-gray-200 hover:bg-transparent hover:border-black text-gray-500 hover:text-black",
-					membersPageInviteButton:
-						"bg-black border border-black border-solid hover:bg-white hover:text-black",
-					card: "bg-[#fafafa]",
-				},
-			}}>
-			<html lang="en" suppressHydrationWarning={true}>
+		<html lang="en" suppressHydrationWarning={true}>
+			<ClerkProvider
+				appearance={{
+					variables: { colorPrimary: "#000000" },
+					elements: {
+						formButtonPrimary:
+							"bg-black border border-black border-solid hover:bg-white hover:text-black",
+						socialButtonsBlockButton:
+							"bg-white border-gray-200 hover:bg-transparent hover:border-black text-gray-600 hover:text-black",
+						socialButtonsBlockButtonText: "font-semibold",
+						formButtonReset:
+							"bg-white border border-solid border-gray-200 hover:bg-transparent hover:border-black text-gray-500 hover:text-black",
+						membersPageInviteButton:
+							"bg-black border border-black border-solid hover:bg-white hover:text-black",
+						card: "bg-[#fafafa]",
+					},
+				}}>
 				<body className={inter.className + " bg-zinc-900 text-white"}>
 					<ErrorBoundary FallbackComponent={ErrorFallBack}>
 						<ConvexClientProvider>
@@ -77,12 +76,9 @@ export default function RootLayout({
 							},
 						}}
 					/>
-					<Analytics beforeSend={((event) => {
-						// todo - allow users to opt out of analytics
-						return event;
-					})}/>
+					<Analytics />
 				</body>
-			</html>
-		</ClerkProvider>
+			</ClerkProvider>
+		</html>
 	);
 }

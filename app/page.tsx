@@ -75,7 +75,7 @@ const Features = () => {
 	return (
 		<section
 			id="features"
-			className="py-20 min-h-screen bg-gradient-to-b from-primary-600 to-primary-400">
+			className="py-20 min-h-screen">
 			<div className="container mx-auto px-4">
 				<h2 className="text-4xl font-semibold text-center mb-6">Key Features</h2>
 				<div className="grid gap-8 lg:grid-cols-2">

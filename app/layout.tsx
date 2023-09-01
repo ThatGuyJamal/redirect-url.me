@@ -9,8 +9,8 @@ import Header from "@/components/ui/Header";
 import ConvexClientProvider from "@/providers/ConvexClientProvider";
 import { Toaster } from "react-hot-toast";
 import ErrorFallBack from "@/components/ErrorFallBack";
+import AnalyticsProvider from "@/providers/AnalyticsProvider";
 
-import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -76,7 +76,7 @@ export default function RootLayout({
 							},
 						}}
 					/>
-					<Analytics />
+					<AnalyticsProvider />
 				</body>
 			</ClerkProvider>
 		</html>

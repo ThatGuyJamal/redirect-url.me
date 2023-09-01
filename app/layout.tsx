@@ -11,6 +11,8 @@ import ConvexClientProvider from "@/providers/ConvexClientProvider";
 import { Toaster } from "react-hot-toast";
 import ErrorFallBack from "@/components/ErrorFallBack";
 
+import { Analytics } from "@vercel/analytics/react";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -75,6 +77,10 @@ export default function RootLayout({
 							},
 						}}
 					/>
+					<Analytics beforeSend={((event) => {
+						// todo - allow users to opt out of analytics
+						return event;
+					})}/>
 				</body>
 			</html>
 		</ClerkProvider>

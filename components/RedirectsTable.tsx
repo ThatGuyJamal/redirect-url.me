@@ -111,8 +111,8 @@ const RedirectsTable: FC<RedirectsTableProps> = ({
 							URL:{" "}
 							<a
 								target="_blank"
-								href={`https://redirecturl.me/r/${redirect?.redirect_url}`}>
-								{`https://redirecturl.me/r/${redirect?.redirect_url}`}
+								href={`https://redirecturl.me/r/${redirect?.redirect_code}`}>
+								{`https://redirecturl.me/r/${redirect?.redirect_code}`}
 							</a>
 						</p>
 						<p className="text-gray-600">

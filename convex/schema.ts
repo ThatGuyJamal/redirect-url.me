@@ -10,7 +10,7 @@ export default defineSchema({
 		redirect_lifespan: v.optional(v.number()),
 	})
 		.index("by_email", ["user_email"])
-		.index("by_email_code", ["user_email", "redirect_code"]),
+		.index("bye_code", ["redirect_code"]),
 	users: defineTable({
 		user_email: v.string(),
 		email_verified: v.boolean(),

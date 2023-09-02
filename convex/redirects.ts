@@ -20,10 +20,11 @@ export const get = query({
 	handler: async (ctx, args) => {
 		const q = await ctx.db
 			.query("redirects")
-			.filter((q) => q.eq(q.field("redirect_code"), args.redirect_code))
+			.withIndex("bye_code", (q) => q.eq("redirect_code", args.redirect_code))
 			.unique();
 
 		if (!q) return "not found";
+
 
 		return q;
 	},
@@ -77,31 +78,13 @@ export const create = mutation({
 
 export const destroy = mutation({
 	args: {
-		user_email: v.string(),
 		id: v.id("redirects"),
 	},
 	handler: async (ctx, args) => {
 		try {
-			const user = await ctx.auth.getUserIdentity();
-
-			if (!user) {
-				return "Unauthorized";
-			}
-
-			const { id, user_email } = args;
-
-			if (user_email !== user.email || !user.emailVerified) {
-				return "Unauthorized";
-			}
+			const { id } = args;
 
 			await ctx.db.delete(id);
-
-			await createIfNull(ctx, {
-				user_email,
-				email_verified: user.emailVerified,
-				is_admin: false,
-				is_premium: false,
-			});
 
 			return "Success";
 		} catch (error) {
@@ -117,19 +100,10 @@ export const update = mutation({
 		redirect_name: v.string(),
 		redirect_url: v.string(),
 		redirect_lifespan: v.optional(v.number()),
-		user_email: v.string(),
-		user_email_verified: v.boolean(),
 	},
 	handler: async (ctx, args) => {
 		try {
-			const {
-				id,
-				redirect_name,
-				redirect_url,
-				redirect_lifespan,
-				user_email,
-				user_email_verified,
-			} = args;
+			const { id, redirect_name, redirect_url, redirect_lifespan } = args;
 
 			const doc = await ctx.db.get(id);
 
@@ -141,13 +115,6 @@ export const update = mutation({
 				redirect_name: redirect_name,
 				redirect_url: redirect_url,
 				redirect_lifespan: redirect_lifespan,
-			});
-
-			await createIfNull(ctx, {
-				user_email: user_email,
-				email_verified: user_email_verified,
-				is_admin: false,
-				is_premium: false,
 			});
 
 			return "Success";

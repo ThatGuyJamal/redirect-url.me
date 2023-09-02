@@ -14,8 +14,6 @@ import EditRedirect from "./forms/EditRedirectForm";
 interface RedirectsTableProps {
 	isPremium: boolean;
 	username: string | null | undefined;
-	user_email_verified: boolean | undefined;
-	user_email: string | undefined;
 	redirects: IRedirect[] | undefined;
 	loadInterval?: number;
 }
@@ -23,12 +21,12 @@ interface RedirectsTableProps {
 const RedirectsTable: FC<RedirectsTableProps> = ({
 	isPremium,
 	username,
-	user_email,
-	user_email_verified,
 	redirects,
 	loadInterval,
 }) => {
-	const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+	const [confirmDelete, setConfirmDelete] = useState<Id<"redirects"> | null>(
+		null
+	);
 	const [editableRedirect, setEditableRedirect] = useState<IRedirectEdit | null>(
 		null
 	);
@@ -38,7 +36,7 @@ const RedirectsTable: FC<RedirectsTableProps> = ({
 	const destroy = useMutation(api.redirects.destroy);
 	const update = useMutation(api.redirects.update);
 
-	const handleDeleteClick = (redirectId: string) => {
+	const handleDeleteClick = (redirectId: Id<"redirects">) => {
 		setConfirmDelete(redirectId);
 	};
 
@@ -49,14 +47,16 @@ const RedirectsTable: FC<RedirectsTableProps> = ({
 	const handleConfirmDelete = (id: Id<"redirects">) => {
 		console.log("Deleting redirect with ID:", confirmDelete);
 
-		toast.promise(destroy({
-			id,
-			user_email: user_email ? user_email : "skip",
-		}), {
-			loading: "Deleting your data...",
-			success: "Deleted!",
-			error: "Failed to delete...",
-		})
+		toast.promise(
+			destroy({
+				id,
+			}),
+			{
+				loading: "Deleting your data...",
+				success: "Deleted!",
+				error: "Failed to delete...",
+			}
+		);
 
 		setConfirmDelete(null); // Clear the confirmation state
 	};
@@ -81,8 +81,6 @@ const RedirectsTable: FC<RedirectsTableProps> = ({
 				redirect_name: editedRedirect.redirect_name,
 				redirect_url: editedRedirect.redirect_url,
 				redirect_lifespan: editedRedirect.redirect_lifespan,
-				user_email: user_email ? user_email : "skip",
-				user_email_verified: user_email_verified ?? false,
 			}),
 			{
 				loading: "Saving your data...",
@@ -111,8 +109,8 @@ const RedirectsTable: FC<RedirectsTableProps> = ({
 							URL:{" "}
 							<a
 								target="_blank"
-								href={`https://redirecturl.me/r/${redirect?.redirect_code}`}>
-								{`https://redirecturl.me/r/${redirect?.redirect_code}`}
+								href={`${window.location.origin}/r/${redirect?.redirect_code}`}>
+								{`${window.location.origin}/r/${redirect?.redirect_code}`}
 							</a>
 						</p>
 						<p className="text-gray-600">
@@ -129,7 +127,7 @@ const RedirectsTable: FC<RedirectsTableProps> = ({
 						</p>
 						<button
 							className="text-red-500 cursor-pointer mt-2"
-							onClick={() => handleDeleteClick(redirect?._id || "")}>
+							onClick={() => handleDeleteClick(redirect!._id)}>
 							Delete
 						</button>
 						<button

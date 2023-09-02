@@ -16,13 +16,8 @@ const page: FC<pageProps> = ({}) => {
 
 	const redirectCode = extractCodeFromPath(pathname);
 
-	if (!redirectCode) {
-		router.push("/");
-		return null;
-	}
-
 	const redirect = useQuery(api.redirects.get, {
-		redirect_code: redirectCode,
+		redirect_code: redirectCode ? redirectCode : "skip",
 	});
 
 	useEffect(() => {
@@ -50,7 +45,9 @@ const page: FC<pageProps> = ({}) => {
 
 	return (
 		<>
-			<div className="min-h-screen lg:py-20">Redirecting...</div>
+			<div className="min-h-screen lg:py-20">
+				{isLoading ? <h2>Fetching data...</h2> : <h2>Redirecting...</h2>}
+			</div>
 		</>
 	);
 };

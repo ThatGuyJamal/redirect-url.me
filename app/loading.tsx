@@ -5,9 +5,9 @@ interface loadingProps {}
 
 const loading: FC<loadingProps> = ({}) => {
 	return (
-		<div>
+		<>
 			<SpinningLoader />
-		</div>
+		</>
 	);
 };
 

@@ -55,7 +55,7 @@ export const create = mutation({
 			.collect();
 
 		if (getUserRedirects.length > 25 && !isPremium) {
-			throw new Error("Max redirects reached");
+			return "You have reached the maximum amount of redirects for your account."
 		}
 
 		await ctx.db.insert("redirects", {

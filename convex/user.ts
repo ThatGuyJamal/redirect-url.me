@@ -52,8 +52,8 @@ export const createIfNull = mutation({
 
 		const user = await ctx.db
 			.query("users")
-			.filter((q) => q.eq(q.field("user_email"), user_email))
-			.first();
+			.withIndex("by_email", (q) => q.eq("user_email", user_email))
+			.unique();
 
 		if (user) return;
 

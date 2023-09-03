@@ -14,7 +14,7 @@ import EditRedirect from "./forms/EditRedirectForm";
 interface RedirectsTableProps {
 	isPremium: boolean;
 	username: string | null | undefined;
-	redirects: IRedirect[] | undefined;
+	redirects: IRedirect[]
 	loadInterval?: number;
 }
 
@@ -92,13 +92,23 @@ const RedirectsTable: FC<RedirectsTableProps> = ({
 		// Clear the editable redirect
 		setEditableRedirect(null);
 	};
+
+	if(redirects.length === 0) return (
+		<div className="p-8 mt-16">
+			<h1 className="text-2xl font-bold mb-4 text-red-400">
+				{username || "Your"} Redirect Urls
+			</h1>
+			<p className="text-gray-600">You have no redirects yet.</p>
+		</div>
+	)
+
 	return (
 		<div className="p-8 mt-16">
 			<h1 className="text-2xl font-bold mb-4 text-red-400">
 				{username ?? "Your"} Redirect Urls
 			</h1>
 			<ul className="space-y-4">
-				{redirects?.map((redirect) => (
+				{redirects.map((redirect) => (
 					<li
 						key={redirect?._id}
 						className="border rounded-lg p-4 bg-zinc-200 shadow-md">

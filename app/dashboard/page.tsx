@@ -28,7 +28,7 @@ const page: FC<pageProps> = ({}) => {
 			<div className="min-h-screen lg:py-20">
 				<div className="mx-auto p-8">
 					<CreateRedirectForm isPremium={isPremium} user={user!} />
-					<RedirectsTable redirects={redirects}username={user?.username} isPremium={isPremium}/>
+					<RedirectsTable redirects={redirects ?? []}username={user?.username} isPremium={isPremium}/>
 				</div>
 			</div>
 		</>
